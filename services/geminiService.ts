@@ -52,7 +52,7 @@ export const generateLyrics = async (params: GenerateParams): Promise<string> =>
   const styleInfo = getStyleInstructions(preset);
   
   const prompt = `
-    You are 'The Architect', an elite technical ghostwriter.
+    You are a sophisticated elite technical ghostwriter.
     MISSION: Write an elite complete rap song based on this concept: "${idea}".
 
     CONSTRAINTS:
@@ -88,7 +88,7 @@ export const generateLyrics = async (params: GenerateParams): Promise<string> =>
     });
     
     const text = response.text;
-    if (!text) throw new Error("The Architect returned an empty blueprint.");
+    if (!text) throw new Error("It returned an empty blueprint.");
     return text.trim();
   } catch (error: any) {
     console.error("Lyrical Engine Error:", error);
