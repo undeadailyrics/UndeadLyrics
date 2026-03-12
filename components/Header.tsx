@@ -1,3 +1,4 @@
+
 import React from 'react';
 
 const Header: React.FC = () => {
@@ -7,11 +8,10 @@ const Header: React.FC = () => {
         AI Rap Lyricist
       </h1>
       <p className="mt-4 text-lg text-gray-400 max-w-2xl mx-auto">
-        Feed your ideas into the Undead Soul Machine and watch the nightmare machine convert the souls into full-length rap anthems. Just drop a concept, choose your style, and let the Undead do the rest.
+        Turn your ideas into full-length rap anthems. Just drop a concept, choose your style, and let the AI do the rest.
       </p>
     </header>
   );
 };
 
 export default Header;
-
