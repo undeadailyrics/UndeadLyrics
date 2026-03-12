@@ -1,9 +1,8 @@
-
 import React, { useState, useRef } from 'react';
 import type { 
   LyricsFormProps, StylePreset, RhymeComplexity, StorytellingDepth, EmotionalTone,
   VocabularyLevel, AdLibIntensity, RegionalFlavor, EnergyLevel,
-  AlliterationLevel, PunchlineDensity 
+  AlliterationLevel, PunchlineDensity, MetaphorDensity, SlangIntensity, InternalRhymeLevel
 } from '../types';
 
 const styles: { id: StylePreset; label: string; description: string; icon: string }[] = [
@@ -18,7 +17,18 @@ const styles: { id: StylePreset; label: string; description: string; icon: strin
   { id: 'EMO_RAP', label: 'Emo Rap', description: 'Melancholic.', icon: '💔' },
   { id: 'LOFI_HIPHOP', label: 'Lofi / Jazz', description: 'Relaxed Wit.', icon: '☕' },
   { id: 'ICP', label: 'Dark Carnival', description: 'Horrorcore.', icon: '🤡' },
-  { id: 'SOUTHERN_GOSICK', label: 'Crunk/South', description: 'Club Hype.', icon: '🐊' }
+  { id: 'SOUTHERN_GOSICK', label: 'Crunk/South', description: 'Club Hype.', icon: '🐊' },
+  { id: 'BOOM_BAP', label: '90s Boom Bap', description: 'Classic 90s.', icon: '📼' },
+  { id: 'MUMBLE_RAP', label: 'Melodic/Mumble', description: 'Vibe-focused.', icon: '🍬' },
+  { id: 'HORRORCORE', label: 'Horrorcore', description: 'Dark & Macabre.', icon: '🔪' },
+  { id: 'JAZZ_RAP', label: 'Jazz Rap', description: 'Smooth & Sophisticated.', icon: '🎷' },
+  { id: 'LATIN_TRAP', label: 'Latin Trap', description: 'Reggaeton Fusion.', icon: '🔥' },
+  { id: 'HYPHY', label: 'Hyphy', description: 'Bay Area Energy.', icon: '🌉' },
+  { id: 'CLOUD_RAP', label: 'Cloud Rap', description: 'Ethereal & Hazy.', icon: '☁️' },
+  { id: 'TRAP_METAL', label: 'Trap Metal', description: 'Aggressive & Distorted.', icon: '🤘' },
+  { id: 'SHUFFLE_RAP', label: 'Shuffle Rap', description: 'Dance-focused Bounce.', icon: '💃' },
+  { id: 'MELODIC_GRIME', label: 'Melodic Grime', description: 'UK Energy + Hooks.', icon: '🇬🇧' },
+  { id: 'JAPANESE_HIPHOP', label: 'Japanese Hip Hop', description: 'Precise & Futuristic.', icon: '🇯🇵' }
 ];
 
 const structures = [
@@ -27,7 +37,7 @@ const structures = [
   { label: 'Chorus', prefix: 'Draft an anthemic [Chorus] for: ', icon: '🎡' },
   { label: 'Verse 2', prefix: 'Regenerate [Verse 2] with deep story for: ', icon: '📜' },
   { label: 'Bridge', prefix: 'Write a mood-shifting [Bridge] for: ', icon: '🌉' },
-  { label: 'Verse 3', prefix: 'Craft a high-intensity [Verse 3] for: ', icon: '🧨' },
+  { label: 'Verse 3', prefix: 'Compose a high-intensity [Verse 3] for: ', icon: '🧨' },
   { label: 'Outro', prefix: 'Draft a fading [Outro] for: ', icon: '🏁' },
 ];
 
@@ -63,7 +73,9 @@ const LyricsForm: React.FC<LyricsFormProps> = ({
   emotionalTone, setEmotionalTone, vocabularyLevel, setVocabularyLevel,
   adLibIntensity, setAdLibIntensity, regionalFlavor, setRegionalFlavor,
   energyLevel, setEnergyLevel, alliterationLevel, setAlliterationLevel,
-  punchlineDensity, setPunchlineDensity, artistReference, setArtistReference,
+  punchlineDensity, setPunchlineDensity, metaphorDensity, setMetaphorDensity,
+  slangIntensity, setSlangIntensity, internalRhymeLevel, setInternalRhymeLevel,
+  artistReference, setArtistReference,
   onSubmit, isLoading 
 }) => {
   const [showAdvanced, setShowAdvanced] = useState(false);
@@ -71,7 +83,7 @@ const LyricsForm: React.FC<LyricsFormProps> = ({
   const [shake, setShake] = useState(false);
 
   const applyStructure = (prefix: string) => {
-    const cleanIdea = idea.replace(/^(Rewrite|Regenerate|Draft|Craft|Write).+?for: /i, '').trim();
+    const cleanIdea = idea.replace(/^(Rewrite|Regenerate|Draft|Compose|Write).+?for: /i, '').trim();
     setIdea(`${prefix}${cleanIdea}`);
   };
 
@@ -172,7 +184,7 @@ const LyricsForm: React.FC<LyricsFormProps> = ({
               className="text-[10px] font-black uppercase text-cyan-500 border-b border-cyan-500/30 pb-0.5 tracking-widest"
               disabled={isLoading}
             >
-              {showAdvanced ? 'Standard View' : 'Full Architecture'}
+              {showAdvanced ? 'Standard View' : 'Full Technical Controls'}
             </button>
           </div>
 
@@ -184,19 +196,22 @@ const LyricsForm: React.FC<LyricsFormProps> = ({
             </div>
             <div className="space-y-5">
               <Segment label="Story Flow" current={storytellingDepth} onChange={setStorytellingDepth} disabled={isLoading} options={[{value:'LINEAR',label:'Clear'},{value:'FRAGMENTED',label:'Vibe'},{value:'CONVOLUTED',label:'Meta'}]} />
-              <Segment label="Emotional Tone" current={emotionalTone} onChange={setEmotionalTone} disabled={isLoading} options={[{value:'AGGRESSIVE',label:'Aggro'},{value:'INTROSPECTIVE',label:'Deep'},{value:'HUMOROUS',label:'Witty'}]} />
-              <Segment label="Energy Level" current={energyLevel} onChange={setEnergyLevel} disabled={isLoading} options={[{value:'CHILL',label:'Chill'},{value:'MODERATE',label:'Mid'},{value:'HIGH_ENERGY',label:'Hype'}]} />
+              <Segment label="Emotional Tone" current={emotionalTone} onChange={setEmotionalTone} disabled={isLoading} options={[{value:'AGGRESSIVE',label:'Aggro'},{value:'INTROSPECTIVE',label:'Deep'},{value:'HUMOROUS',label:'Witty'},{value:'DARK',label:'Dark'},{value:'TRIUMPHANT',label:'Win'},{value:'MELANCHOLIC',label:'Sad'},{value:'BOASTFUL',label:'Flex'}]} />
+              <Segment label="Energy Level" current={energyLevel} onChange={setEnergyLevel} disabled={isLoading} options={[{value:'CHILL',label:'Chill'},{value:'MODERATE',label:'Mid'},{value:'HIGH_ENERGY',label:'Hype'},{value:'FRENZIED',label:'Wild'}]} />
             </div>
           </div>
 
           {showAdvanced && (
             <div className="pt-8 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6 border-t border-gray-800/40 animate-in fade-in slide-in-from-top-4 duration-500">
               <div className="space-y-5">
-                <Segment label="Vocabulary" current={vocabularyLevel} onChange={setVocabularyLevel} disabled={isLoading} options={[{value:'STREET',label:'Street'},{value:'BALANCED',label:'Mid'},{value:'LITERARY',label:'Scholar'}]} />
-                <Segment label="Ad-Lib Frequency" current={adLibIntensity} onChange={setAdLibIntensity} disabled={isLoading} options={[{value:'NONE',label:'Dry'},{value:'SPARSE',label:'Med'},{value:'HEAVY',label:'Loud'}]} />
+                <Segment label="Vocabulary" current={vocabularyLevel} onChange={setVocabularyLevel} disabled={isLoading} options={[{value:'STREET',label:'Street'},{value:'BALANCED',label:'Mid'},{value:'LITERARY',label:'Scholar'},{value:'SCIENTIFIC',label:'Nerd'}]} />
+                <Segment label="Ad-Lib Frequency" current={adLibIntensity} onChange={setAdLibIntensity} disabled={isLoading} options={[{value:'NONE',label:'Dry'},{value:'SPARSE',label:'Med'},{value:'HEAVY',label:'Loud'},{value:'CHAOTIC',label:'Wild'}]} />
+                <Segment label="Metaphor Density" current={metaphorDensity} onChange={setMetaphorDensity} disabled={isLoading} options={[{value:'NONE',label:'None'},{value:'SUBTLE',label:'Low'},{value:'HEAVY',label:'High'},{value:'CRYPTIC',label:'Deep'}]} />
               </div>
               <div className="space-y-5">
-                <Segment label="Regional Flavor" current={regionalFlavor} onChange={setRegionalFlavor} disabled={isLoading} options={[{value:'GLOBAL',label:'Std'},{value:'EAST_COAST',label:'East'},{value:'WEST_COAST',label:'West'},{value:'SOUTHERN',label:'South'},{value:'UK',label:'UK'}]} />
+                <Segment label="Regional Flavor" current={regionalFlavor} onChange={setRegionalFlavor} disabled={isLoading} options={[{value:'GLOBAL',label:'Std'},{value:'EAST_COAST',label:'East'},{value:'WEST_COAST',label:'West'},{value:'SOUTHERN',label:'South'},{value:'UK',label:'UK'},{value:'MIDWEST',label:'MidW'},{value:'WEST_INDIES',label:'WI'}]} />
+                <Segment label="Slang Intensity" current={slangIntensity} onChange={setSlangIntensity} disabled={isLoading} options={[{value:'NONE',label:'None'},{value:'MODERATE',label:'Mid'},{value:'HEAVY',label:'Max'}]} />
+                <Segment label="Internal Rhyme" current={internalRhymeLevel} onChange={setInternalRhymeLevel} disabled={isLoading} options={[{value:'NONE',label:'None'},{value:'SUBTLE',label:'Low'},{value:'HEAVY',label:'High'}]} />
                 <div className="flex items-center justify-between p-3.5 bg-black/40 rounded-2xl border border-gray-800">
                   <div className="flex flex-col">
                     <span className="text-[10px] font-black uppercase text-gray-500 tracking-widest">Explicit Logic</span>
