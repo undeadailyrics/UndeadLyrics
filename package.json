@@ -6,12 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@google/genai": "^1.44.0",
+    "axios": "^1.13.6",
+    "express": "^5.2.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "@google/genai": "^1.42.0"
+    "tsx": "^4.21.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
